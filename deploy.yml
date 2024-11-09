@@ -1,0 +1,75 @@
+#refer -- https://github.com/google-github-actions/get-gke-credentials 
+#refer -- https://github.com/google-github-actions/auth#preferred-direct-workload-identity-federation
+
+
+name: Deploying to GKE
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  PROJECT_ID: testproject-00717777
+  GKE_CLUSTER: demo-cluster 
+  GKE_ZONE: us-central1-c
+  ENVIRONMENT: dev
+  WORKLOAD_IDENTITY_PROVIDER_ID: projects/79565114457/locations/global/workloadIdentityPools/github/providers/my-repo
+  GCP_SERVICE_ACCOUNT: github@testproject-00717777.iam.gserviceaccount.com
+  # GOOGLE_CREDENTIALS: 
+jobs:
+  authenticate-with-gcp-and-deploy:
+    name: Setup, Prepare, and Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Configure Workload Identity Federation and generate 
+# an access token.
+    
+    
+    # - id: 'auth'
+    #   name: 'Authenticate to Google Cloud'
+    #   uses: 'google-github-actions/auth@v2'
+    #   with:
+    #     token_format: 'access_token'
+    #     workload_identity_provider:  ${{ env.WORKLOAD_IDENTITY_PROVIDER_ID }}
+    #     servicef_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+
+    #authenticate with service account f
+
+    - uses: 'google-github-actions/auth@v2'
+      with:
+        
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}' 
+        # Replace with the name of your GitHub Actions secret
+
+
+    # Get the GKE credentials so we can deploy to the # cluster
+    - name: Set up GKE credentials
+      uses: google-github-actions/get-gke-credentials@v2
+      with:
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_ZONE }}
+
+    
+
+    # Download and setup latest kubectl version 
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'latest'
+
+    # Deploy to the GKE cluster
+    - name: Deploy to GKE
+      run: |-
+        echo "Kustomize output:"
+        
+        kubectl apply -k .
+        
