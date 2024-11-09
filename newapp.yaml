@@ -1,0 +1,37 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: newapps.apps.test.dev           # The name of the 
+CRD (plural form)
+spec:
+  group: apps.test.dev                  # API group for the 
+custom resource
+  names:
+    kind: NewApp                        # Kind of the 
+custom resource
+    listKind: NewAppList                # List kind for the 
+custom resource
+    plural: newapps                     # Plural name used 
+in API calls
+    singular: newapp                    # Singular name
+  scope: Namespaced                     # Scope can be 
+"Namespaced" or "Cluster"
+  versions:
+    - name: v1                          # Version of the 
+custom resource
+      served: true                      # Enable serving 
+this version
+      storage: true                     # Set as storage 
+version
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                image:
+                  type: string
+      subresources:
+        status: {}                      # Enables the 
+`.status` subresource

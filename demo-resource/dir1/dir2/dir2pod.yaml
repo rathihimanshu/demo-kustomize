@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dir2pod
+spec:
+  containers:
+  - name: d1
+    image: httpd
