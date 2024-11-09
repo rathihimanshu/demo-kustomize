@@ -1,5 +1,6 @@
 #refer -- https://github.com/google-github-actions/get-gke-credentials 
 #refer -- https://github.com/google-github-actions/auth#preferred-direct-workload-identity-federation
+#ensure service accounts are provided proper permissions
 
 
 name: Deploying to GKE
