@@ -1,0 +1,10 @@
+resources:
+  - ../../base
+namePrefix: prod-
+images:
+  - name: frontend-image
+    newName: rathihimanshu/frontend
+    newTag: prod
+  - name: backend-image
+    newName: rathihimanshu/backend
+    newTag: prod

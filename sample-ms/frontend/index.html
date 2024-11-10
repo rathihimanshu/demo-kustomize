@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kustomize Demo Frontend</title>
+</head>
+<body>
+    <h1>Welcome to the Kustomize Demo App</h1>
+    <div id="content"></div>
+    <script>
+        async function fetchData() {
+            const response = await fetch('http://34.67.70.202:5000/data');
+            const data = await response.json();
+            document.getElementById('content').innerText = JSON.stringify(data);
+        }
+        fetchData();
+    </script>
+</body>
+</html>

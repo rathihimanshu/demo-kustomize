@@ -1,0 +1,10 @@
+resources:
+  - ../../base
+namePrefix: dev-
+images:
+  - name: frontend-image
+    newName: rathihimanshu/frontend
+    newTag: v1new
+  - name: backend-image
+    newName: rathihimanshu/backend
+    newTag: v1new
